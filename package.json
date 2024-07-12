@@ -1,0 +1,17 @@
+{
+  "name": "crud-mongodb",
+  "version": "1.0.0",
+  "description": "This base project creates a CRUD using the following technologies:",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  }
+}
