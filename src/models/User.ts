@@ -1,4 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
+import Crypt from '../utils/Crypt'; // Importe sua classe Crypt aqui
 
 // Interface que representa os campos do usuário
 interface IUser {
@@ -20,6 +21,15 @@ class UserModel {
       username: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true }
+    });
+
+    // Middleware para criptografar a senha antes de salvar
+    this.schema.pre<UserDocument>('save', async function(next) {
+      if (this.isModified('password')) {
+        const hashedPassword = await Crypt.hashPassword(this.password);
+        this.password = hashedPassword;
+      }
+      next();
     });
   }
 
