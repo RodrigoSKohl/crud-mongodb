@@ -1,32 +1,26 @@
-import express, { Application, Request, Response } from 'express';
-import dotenv from 'dotenv';
-import db from './utils/Connect';
-import userRoutes from './routes/UserRoutes';
+import db from './loader/Connect';
+import {migrate} from './loader/AutoMigrate'; // Importe a função de migração automática
+import loadRoutes from './loader/Routes';
+import { app, PORT } from './config/ExpressConfig';
 
-dotenv.config();
-const app: Application = express();
-const PORT = process.env.PORT || 3000;
+const startServer = async () => {
+  try {
 
-// Middleware para JSON parsing
-app.use(express.json());
+    // Executar migrações automáticas dinamicamente
+    await db.connect();
+    await migrate();
 
-// Conectar ao MongoDB
-db.connect()
-  .then(() => {
-
-    // Registrar rotas
-    app.use('/api', userRoutes);
-
-    // Rota padrão
-    app.get('/', (req: Request, res: Response) => {
-      res.send('API funcionando corretamente.');
-    });
+    // Carregar todas as rotas dinamicamente
+    loadRoutes(app);
 
     // Iniciar o servidor
     app.listen(PORT, () => {
       console.log(`Servidor Express iniciado na porta ${PORT}.`);
     });
-  })
-  .catch((err) => {
-    console.error('Erro ao conectar ao MongoDB:', err);
-  });
+  } catch (err) {
+    console.error('Erro ao iniciar o servidor:', err);
+    process.exit(1); // Encerra o processo em caso de erro
+  }
+};
+
+startServer();

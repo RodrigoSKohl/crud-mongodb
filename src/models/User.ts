@@ -6,6 +6,8 @@ interface IUser {
   username: string;
   email: string;
   password: string;
+  gender: string;
+  country?: string;
 }
 
 // Interface que estende Document, representando o documento de usuário
@@ -20,7 +22,9 @@ class UserModel {
     this.schema = new Schema<UserDocument>({
       username: { type: String, required: true, unique: true},
       email: { type: String, required: true, unique: true },
-      password: { type: String, required: true }
+      password: { type: String, required: true },
+      gender: { type : String, required: true, default: 'Não informado'},
+      country: { type: String, default: 'Não informado' }
     });
 
     // Middleware para criptografar a senha antes de salvar
