@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UserController from './userController';
 import Crypt from '../utils/crypt';
-import { signToken } from '../utils/signToken';
+import AuthToken from '../utils/token';
 
 class AuthController {
   public async login(req: Request, res: Response): Promise<void> {
@@ -22,7 +22,7 @@ class AuthController {
         return;
       }
 
-      const token = signToken({ userId: user._id });
+      const token = AuthToken.signToken({ userId: user._id });
 
       res.status(200).json({ token });
     } catch (error) {

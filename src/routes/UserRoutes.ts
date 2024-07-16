@@ -21,6 +21,7 @@ class UserRoutes {
     this.router.get('/api/user/:id', handleAsync(UserController.getById));
     this.router.put('/api/user/:id', handleAsync(UserController.update));
     this.router.delete('/api/user/:id', handleAsync(UserController.delete));
+
   }
 }
 
