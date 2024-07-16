@@ -1,13 +1,5 @@
 import mongoose, { ConnectOptions, Mongoose } from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const { MONGODB_URI } = process.env;
-
-if (!MONGODB_URI) {
-  throw new Error('A variável MONGODB_URI deve ser especificada no arquivo .env');
-}
+import { MONGODB_URI, dbOptions } from '../config/dbConfig';
 
 class Database {
   private mongoose: Mongoose;
@@ -36,11 +28,6 @@ class Database {
   }
 }
 
-const options: ConnectOptions = {
-  autoIndex: true,
-  authSource: 'db',
-};
-
-const db = new Database(MONGODB_URI, options);
+const db = new Database(MONGODB_URI!, dbOptions);
 
 export default db;

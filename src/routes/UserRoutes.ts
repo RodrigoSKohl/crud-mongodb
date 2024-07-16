@@ -1,7 +1,7 @@
-import { Router, Request, Response } from 'express';
-import UserController from '../controllers/UserController';
-import { validateObjectId } from '../middlewares/ValidateObjectID';
-import { handleAsync } from '../middlewares/AsyncHandler'; // Importe o middleware handleAsync aqui
+import { Router } from 'express';
+import UserController from '../controllers/userController';
+import { validateObjectId } from '../middlewares/validateObjectID';
+import { handleAsync } from '../middlewares/asyncHandler'; // Importe o middleware handleAsync aqui
 
 class UserRoutes {
   public router: Router;
@@ -16,11 +16,11 @@ class UserRoutes {
     this.router.param('id', validateObjectId);
 
     // Rotas CRUD para usuários com o middleware handleAsync
-    this.router.post('/api/users', handleAsync(UserController.create));
-    this.router.get('/api/users', handleAsync(UserController.getAll));
-    this.router.get('/api/users/:id', handleAsync(UserController.getById));
-    this.router.put('/api/users/:id', handleAsync(UserController.update));
-    this.router.delete('/api/users/:id', handleAsync(UserController.delete));
+    this.router.post('/api/user', handleAsync(UserController.create));
+    this.router.get('/api/user', handleAsync(UserController.getAll));
+    this.router.get('/api/user/:id', handleAsync(UserController.getById));
+    this.router.put('/api/user/:id', handleAsync(UserController.update));
+    this.router.delete('/api/user/:id', handleAsync(UserController.delete));
   }
 }
 

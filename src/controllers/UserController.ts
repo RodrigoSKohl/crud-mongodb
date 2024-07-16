@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import UserModel, { UserDocument } from '../models/User';
-import { Controller } from './_Controller' // Importe o Controller genérico
+import UserModel, { UserDocument } from '../models/user';
+import { Controller } from './_controller';
 
 const userController = new Controller<UserDocument>(UserModel.getModel());
 
@@ -23,6 +23,11 @@ class UserController {
 
   public async delete(req: Request, res: Response): Promise<void> {
     await userController.delete(req, res);
+  }
+
+  // Método personalizado para buscar por email
+  public async findByEmail(email: string): Promise<UserDocument | null> {
+    return await UserModel.getModel().findOne({ email }).exec();
   }
 }
 

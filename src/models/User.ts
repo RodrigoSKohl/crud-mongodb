@@ -1,13 +1,11 @@
 import { Schema, model, Document } from 'mongoose';
-import Crypt from '../utils/Crypt'; // Importe sua classe Crypt aqui
+import Crypt from '../utils/crypt';
 
 // Interface que representa os campos do usuário
 interface IUser {
   username: string;
   email: string;
   password: string;
-  gender: string;
-  country?: string;
 }
 
 // Interface que estende Document, representando o documento de usuário
@@ -20,11 +18,9 @@ class UserModel {
   constructor() {
     // Definição do esquema mongoose para usuário
     this.schema = new Schema<UserDocument>({
-      username: { type: String, required: true, unique: true},
+      username: { type: String, required: true, unique: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
-      gender: { type : String, required: true, default: 'Não informado'},
-      country: { type: String, default: 'Não informado' }
     });
 
     // Middleware para criptografar a senha antes de salvar
@@ -39,7 +35,7 @@ class UserModel {
 
   // Método para obter o modelo mongoose
   getModel() {
-    return model<UserDocument>('Users', this.schema);
+    return model<UserDocument>('User', this.schema);
   }
 }
 
