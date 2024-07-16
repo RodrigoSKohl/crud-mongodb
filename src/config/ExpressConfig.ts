@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
-import config from './jwtConfig';
+import config from './secretConfig';
 import cors from 'cors'
 import { corsOptions } from './corsConfig';
 

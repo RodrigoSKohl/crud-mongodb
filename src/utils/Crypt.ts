@@ -1,12 +1,18 @@
 import bcrypt from 'bcrypt';
+import config from '../config/secretConfig'; // Importa o valor de saltRounds do arquivo de configuração
 
 class Crypt {
-  static async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10; // Número de rounds de hashing
-    return bcrypt.hash(password, saltRounds);
+  private saltRounds: number;
+
+  constructor() {
+    this.saltRounds = config.saltRounds as number;
   }
 
-  static async comparePassword(candidatePassword: string, hashedPassword: string): Promise<boolean> {
+  public async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, this.saltRounds);
+  }
+
+  public async comparePassword(candidatePassword: string, hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(candidatePassword, hashedPassword);
   }
 }

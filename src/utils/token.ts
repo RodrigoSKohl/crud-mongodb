@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import config from '../config/jwtConfig';
+import config from '../config/secretConfig';
 
 interface TokenPayload {
   [key: string]: any;

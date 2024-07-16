@@ -14,8 +14,8 @@ class AuthController {
         res.status(404).json({ error: 'Usuário não encontrado' });
         return;
       }
-
-      const isValidPassword = await Crypt.comparePassword(password, user.password);
+      const crypt = new Crypt();
+      const isValidPassword = await crypt.comparePassword(password, user.password);
 
       if (!isValidPassword) {
         res.status(401).json({ error: 'Credenciais inválidas' });

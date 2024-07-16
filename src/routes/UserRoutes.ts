@@ -15,12 +15,15 @@ class UserRoutes {
     // Middleware para validar ObjectId em todas as rotas que usam '/users/:id'
     this.router.param('id', validateObjectId);
 
+    const apiRouter = Router();
+    this.router.use('/api', apiRouter);
+
     // Rotas CRUD para usuários com o middleware handleAsync
-    this.router.post('/api/user', handleAsync(UserController.create));
-    this.router.get('/api/user', handleAsync(UserController.getAll));
-    this.router.get('/api/user/:id', handleAsync(UserController.getById));
-    this.router.put('/api/user/:id', handleAsync(UserController.update));
-    this.router.delete('/api/user/:id', handleAsync(UserController.delete));
+    apiRouter.post('/user', handleAsync(UserController.create));
+    apiRouter.get('/user', handleAsync(UserController.getAll));
+    apiRouter.get('/user/:id', handleAsync(UserController.getById));
+    apiRouter.put('/user/:id', handleAsync(UserController.update));
+    apiRouter.delete('/user/:id', handleAsync(UserController.delete));
 
   }
 }
